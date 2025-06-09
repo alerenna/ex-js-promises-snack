@@ -20,16 +20,16 @@ const getPostTitle = id => {
     return promessa
 }
 
-const getPostId = id => {
+const getPost = id => {
     const promessa = new Promise((resolve, reject) => {
         fetch(`https://dummyjson.com/posts/${id}`)
             .then(response => response.json())
             .then(post => {
-                console.log("Post:", post);
-                return fetch(`https://dummyjson.com/users/${post.userId}`)
+                fetch(`https://dummyjson.com/users/${post.userId}`)
+                    .then(response => response.json())
+                    .then(user => resolve(user))
+                    .catch(reject)
             })
-            .then(response => response.json())
-            .then(obj => resolve(obj))
             .catch(reject)
     })
 
@@ -40,7 +40,7 @@ getPostTitle(1)
     .then(obj => console.log(obj))
     .catch(error => console.error(error))
 
-getPostId(1)
-    .then(obj => console.log("Author:", obj))
+getPost(1)
+    .then(post => console.log("Post completo:", post))
     .catch(error => console.log(error))
 
