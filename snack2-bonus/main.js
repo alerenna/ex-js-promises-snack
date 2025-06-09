@@ -26,7 +26,7 @@ lanciaDado()
 
 function creaLanciaDado() {
 
-    let ultimoLancio = 0
+    let ultimoLancio = null
 
     return function lancia() {
         return new Promise((resolve, reject) => {
@@ -34,6 +34,7 @@ function creaLanciaDado() {
             setTimeout(() => {
                 if (Math.random() < 0.2) {
                     reject("Ops, il dado si è incastrato");
+                    ultimoLancio = null
                     return
                 }
                 const valore = Math.floor(Math.random() * 6) + 1
